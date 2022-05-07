@@ -34,3 +34,15 @@ class Cfmerchant(models.Model):
     class Meta:
         managed = False
         db_table = 'cfmerchant'
+
+class Comment(models.Model):
+    loan_code = models.CharField(max_length=200, blank=True, null=True)
+    cus_code = models.CharField(max_length=200, blank=True, null=True)
+    comhead = models.CharField(max_length=200, blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
+    caller = models.CharField(max_length=200, blank=True, null=True)
+    emp = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'comment'
