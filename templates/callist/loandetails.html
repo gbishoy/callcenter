@@ -1,18 +1,40 @@
 {% extends "base.html" %} {% block content %}
 <main class="col-12 col-md-11 col-xl-10 py-md-3 pl-md-5 bd-content m-5 align-items-center" role="main">
 
-    <div class="d-flex flex-column text-break form-group col-md-4 ">
-        <div class="d-flex flex-row justify-content-start align-items-center text-nowrap">
-            <h4 style="margin-left: 5px;"> اضافة التعليقات </h4><span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(224, 80, 19);"><p class="m-0" style="color: rgb(231, 135, 25); font-size: 0.9rem;"> بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p></span></div>
+    <div class="d-flex flex-row text-break form-group col-md-4" style="width:100%;" >
+        
+        <div  class=" d-flex flex-row justify-content-start align-items-center text-nowrap" style="width:100%;"  >
+            <h4 style="margin-left: 5px;"> اضافة التعليقات </h4><span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(224, 80, 19);"><p class="m-0" style="color: rgb(231, 135, 25); font-size: 0.9rem;"> بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p></span>
+            <div style="border: solid; border-radius: 30px; border: 2px solid rgb(23, 5, 106); background-color: rgb(131, 159, 229); margin-right: 2%; ">
+                <input type="checkbox" id="rad1" name="fav_language" value="{{o.loan_key1}}">
+                <label for="rad1" class="checkbox-inline" >لم يتم التواصل </label><br>
+            </div >
+            <div id="rado" style="display:none; margin-right: 2%; " >
+            
+                <select class="form-select form-select-sm" name="rad11" id="rad11">
+                    <option value="" selected disabled hidden>Choose here</option>
+                    {% for s in com %}
+                    <option value="{{s.id}}">{{s.id}}</option>
+                    {% endfor %}
+                    
+                </select>
+                <input style="border:15%" type="text" class="form-control" name="rad12">
+                
+            </div>
+        </div>
+    
+       
+
     </div>
     <form method="post">{% csrf_token %} {% for o in customerdata %}
+        
         <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
             <div style="padding: 20px; box-sizing: border-box;">
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
                         <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name1}}</label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox1" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -33,7 +55,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
                         <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox17" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -52,7 +74,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name1}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox2" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -75,7 +97,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.national_id}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox3" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -95,7 +117,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">العمر</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.Textbox118}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox4" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -114,7 +136,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am2}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox5" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -131,11 +153,12 @@
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الحد الأتماني الممنوح</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.consumer_finance_initial_limit}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox6" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -155,7 +178,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ القرض</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox7" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -174,7 +197,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">عدد الأقساط</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_no1}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox8" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -191,11 +214,12 @@
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">رقم الهاتف</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.tel41}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox9" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -215,7 +239,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ القرض</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox10" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -234,7 +258,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">سعر المنتج</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_am1}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox11" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -251,11 +275,12 @@
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">قيمة القسط</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.inst}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox12" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -275,10 +300,10 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">التاجر</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.client_name_m}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox13" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
+                        </div >
                         <div id="mycheckboxdiv13" style="display:none">
                             <select class="form-select form-select-sm" name="com14" id="com14">
                                 <option value="" selected disabled hidden>Choose here</option>
@@ -294,7 +319,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">فأة المنتج</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.category_name}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox14" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -311,11 +336,12 @@
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">المنتج</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.sub_category_name}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox15" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -335,7 +361,7 @@
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الموظف</label>
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.officer_name2}} </label>
-                        <div>
+                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
                             <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
                             <input type="checkbox" name="mycheckbox" id="mycheckbox16" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
                         </div>
@@ -355,7 +381,7 @@
             </div>
 
         </div>
-        <div class="p-3 w-100 mt-4 overflow-auto">
+        <div class=" w-100 mt-4 overflow-auto" style="padding-right:8% ; ">
             <div class="d-flex flex-column align-items-start justify-content-center">
                 <table class="text-left table">
                     <thead>
@@ -385,7 +411,7 @@
                 </table>
             </div>
         </div>
-        <input id="submitting" type="submit" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 40%;width:10%;" value="حفظ"> {% endfor %}
+        <input id="submitting" type="submit" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 50%;width:10%;" value="حفظ"> {% endfor %}
 
     </form>
     <br>
@@ -481,6 +507,12 @@
     });
     $('#mycheckbox17').change(function() {
         $('#mycheckboxdiv17').toggle();
+        
+        
+    });
+    $('#rad1').change(function() {
+
+        $('#rado').toggle();
         
         
     });
