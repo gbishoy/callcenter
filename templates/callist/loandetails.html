@@ -11,12 +11,12 @@
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
-                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.customer_name}}</label>
+                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name1}}</label>
                     </div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
-                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.key}} </label>
+                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
 
 
 
@@ -24,7 +24,7 @@
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.BranchName}} </label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name1}} </label>
                     </div>
 
                 </div>
@@ -32,25 +32,25 @@
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.customer_national_id}} </label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.national_id}} </label>
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ الأصدار</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.issue_date}} </label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">العمر</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.Textbox118}} </label>
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">النوع</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.gender}} </label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am2}} </label>
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
                 <div class="form-row">
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color: rgb(0, 0, 0);">رقم الهاتف</label>
-                        <label class="form-label">0{{o.mobile_phone_number}} </label>
+                        <label class="form-label">{{o.tel41}} </label>
                         <select class="form-select form-select-sm" name="" id="">
                 <option value=""></option>
             </select>
@@ -59,7 +59,7 @@
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color: rgb(0, 0, 0);">سعر المنتج</label>
-                        <label class="form-label">{{o.product_price}} </label>
+                        <label class="form-label">{{o.loan_am1}} </label>
                         <select class="form-select form-select-sm" name="" id="">
                 <option value=""></option>
             </select>
@@ -67,8 +67,8 @@
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color: rgb(0, 0, 0);">المسدد من قيمة المنتج</label>
-                        <label class="form-label">{{o.total_installment}} </label>
+                        <label class="form-label" style="color: rgb(0, 0, 0);">قيمة القسط</label>
+                        <label class="form-label">{{o.inst}} </label>
                         <select class="form-select form-select-sm" name="" id="">
                 <option value=""></option>
             </select>
@@ -77,7 +77,7 @@
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color: rgb(0, 0, 0);">التاجر</label>
-                        <label class="form-label">{{o.merchant_name}} </label>
+                        <label class="form-label">{{o.client_name_m}} </label>
                         <select class="form-select form-select-sm" name="" id="">
                 <option value=""></option>
             </select>
@@ -100,7 +100,7 @@
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color: rgb(0, 0, 0);">الموظف</label>
-                        <label class="form-label">{{o.loanofficer_name}} </label>
+                        <label class="form-label">{{o.officer_name2}} </label>
                         <select class="form-select form-select-sm" name="" id="">
                 <option value=""></option>
             </select>
@@ -126,15 +126,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for z in damendata %}
                         <tr>
-                            <td>الضامن الاول</td>
-                            <td>113400004274</td>
-                            <td class="text-break" style="min-width: 150px;">رانيا احمد احمد حسين</td>
-                            <td>29512032502008</td>
-                            <td style="color: black;">النزله</td>
-                            <td class="text-break" style="min-width: 150px;">اسيوط مركز اسيوط قرقارص شرق البلد بجوار مسجد اولاد عسكرى</td>
-                            <td>01147173913</td>
-                        </tr>
+                          <td>{{z.client_key1}}</td>
+                          <td>{{z.client_key}}</td>
+                          <td class="text-break" style="min-width: 150px;">{{z.client_name1}}</td>
+                          <td>{{z.national_id}}</td>
+                          <td style="color: black;">{{z.home_add_1_mem}}</td>
+                          <td class="text-break" style="min-width: 150px;">{{z.add41}}</td>
+                          <td>{{z.tel41}}</td>
+                      </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

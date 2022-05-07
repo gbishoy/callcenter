@@ -9,7 +9,7 @@ from .decorators import unauthorized_user,allowed_users
 @login_required(login_url='loginpage')   
 @allowed_users(['teamleader'])   
 def get(request):
-    emp = Cfmerchant.objects.raw("select loanofficer_name  ,count(loanofficer_name) as id from cfmerchant where timeadd < current_date group by loanofficer_name ")
+    emp = Cfmerchant.objects.raw("select officer_name2  ,count(officer_name2) as id from cfmerchant where timeadd = current_date group by officer_name2 ")
     officer = Employee.objects.raw("SELECT username as id , first_name FROM public.auth_user where is_superuser = 'false' and id <> 2")   
     workplan = choose.objects.raw("select * from teamleader_choose where timeadd = current_date")
     if request.method == "POST" :
