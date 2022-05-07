@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container col-3 align-items-center">
+    <form method="POST">
+      {% csrf_token %}
+        <div class="mb-3">
+          <label  for="exampleInputuser" class="form-label">اسم المستخدم</label>
+          <input type="text" class="form-control" name="username">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword" class="form-label">كلمة السر</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+       
+        <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+      </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,150 @@
+{% extends "base.html" %} {% block content %}
+<main class="col-12 col-md-11 col-xl-10 py-md-3 pl-md-5 bd-content m-5 align-items-center" role="main">
+
+    <div class="d-flex flex-column text-break form-group col-md-4 ">
+        <div class="d-flex flex-row justify-content-start align-items-center text-nowrap">
+            <h4 style="margin-left: 5px;"> اضافة التعليقات </h4><span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(224, 80, 19);"><p class="m-0" style="color: rgb(231, 135, 25); font-size: 0.9rem;"> بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p></span></div>
+    </div>
+    <form method="post">{% csrf_token %} {% for o in customerdata %}
+        <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+            <div style="padding: 20px; box-sizing: border-box;">
+                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                        <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
+                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.customer_name}}</label>
+                    </div>
+
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
+                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.key}} </label>
+
+
+
+                    </div>
+
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.BranchName}} </label>
+                    </div>
+
+                </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.customer_national_id}} </label>
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ الأصدار</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.issue_date}} </label>
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">النوع</label>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.gender}} </label>
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                </div>
+                <div class="form-row">
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">رقم الهاتف</label>
+                        <label class="form-label">0{{o.mobile_phone_number}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">سعر المنتج</label>
+                        <label class="form-label">{{o.product_price}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">المسدد من قيمة المنتج</label>
+                        <label class="form-label">{{o.total_installment}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">التاجر</label>
+                        <label class="form-label">{{o.merchant_name}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">فأة المنتج</label>
+                        <label class="form-label">{{o.category_name}} </label>
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">المنتج</label>
+                        <label class="form-label">{{o.sub_category_name}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color: rgb(0, 0, 0);">الموظف</label>
+                        <label class="form-label">{{o.loanofficer_name}} </label>
+                        <select class="form-select form-select-sm" name="" id="">
+                <option value=""></option>
+            </select>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="p-3 w-100 mt-4 overflow-auto">
+            <div class="d-flex flex-column align-items-start justify-content-center">
+                <table class="text-left table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>كود العميل</th>
+                            <th>الإسم</th>
+                            <th>الرقم القومي</th>
+                            <th>المنطقة</th>
+                            <th>عنوان المنزل</th>
+                            <th>رقم التليفون</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الضامن الاول</td>
+                            <td>113400004274</td>
+                            <td class="text-break" style="min-width: 150px;">رانيا احمد احمد حسين</td>
+                            <td>29512032502008</td>
+                            <td style="color: black;">النزله</td>
+                            <td class="text-break" style="min-width: 150px;">اسيوط مركز اسيوط قرقارص شرق البلد بجوار مسجد اولاد عسكرى</td>
+                            <td>01147173913</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <input type="submit" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 40%;width:10%;" value="حفظ"> {% endfor %}
+
+    </form>
+    <br>
+    <br>
+
+</main>
+
+{% endblock content %}

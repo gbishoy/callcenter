@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Today Tasks   
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+      <form class="bd-search d-flex align-items-center">        
+      </form>
+      <nav class=" bd-links">
+        <div class="bd-toc-item active">
+          <br>
+          <form method='post'>{% csrf_token %}
+            <label for="customerdata">قائمة العملاء</label>
+            <br>
+        
+            <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
+              {% for i in customers %}
+              <option value="{{i.id}}" >{{i.customer_name}}</option>
+              {% endfor %}
+            </select>
+      
+            <input type="submit" class="btn btn-primary " style="margin-right: 15%; margin-top: 5%;" value="عرض"> 
+          </form>
+        </div>
+
+      </nav>
+      
+    </div>
+    
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content m-5" role="main">
+      
+        <div class="d-flex flex-row justify-content-center"><div class="d-flex flex-row justify-content-start align-items-center text-nowrap"><h4> قروض العميل</h4><span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(237, 182, 0);"><p class="m-0" style="color: rgb(237, 182, 0); font-size: 0.9rem;"> اختر القرض لعرض البيانات</p></span></div></div>
+        <form method="post">{% csrf_token %}
+        
+        <div class="justify-content-center" style="background-color: rgb(237, 251, 254); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;"><div style="padding: 20px;"><div class="form-row">
+          <div class="d-flex flex-column text-break form-group col-md-4 justify-content-center">
+            <label for="loan" style="color: rgb(110, 110, 110);">قروض العميل</label>
+            <select class="form-select form-select-sm mb-2 mt-4" style="margin-right: 15%;" name="loan" id="loan">
+              {% for o in customerloan %}
+              <option value="{{o.id}}">{{o.id}}</option>
+              {% endfor %}
+            </select>
+          </div>
+              </div>
+              <input type="submit" class="btn btn-warning justify-content-center" style="margin-right: 30%;" value="Show">
+
+            </div>
+            
+          </form>
+          <br>
+          <br>
+       <div>
+          
+        </div>
+
+    </main>
+  </div> 
+</div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+  main
+{% endblock title %}
+
+
+{% block content %}
+
+  {% csrf_token %}
+  <div class="container v-flex col-3 list-group">
+    
+    <form  method="post" >{% csrf_token %}
+    <label for="employee">اختر الموظف: </label>
+    <select  id="employee" name="employee">
+    {% for i in emp %}
+      <option value="{{i.loanofficer_name}}">{{i.loanofficer_name}}{{i.id}}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="officer">اختر الموظف: </label>
+    <select  id="officer" name="officer">
+      {% for i in officers %}
+        <option value="{{i.id}}">{{i.id}}</option>
+      {% endfor %}
+      </select>
+      <br>
+    <input  type="submit" value="submit">
+  </form>
+  </div>
+  <br>
+
+  <div class="container v-flex col-3 list-group">
+    <div class="list-group">
+      {% for q in workplan %}
+      <button type="button" class="list-group-item list-group-item-action ">
+          اسم القائم بالأتصال : {{q.employee}}
+          <br>
+          اسم الأخصائي او المنسقة :  {{q.loanofficer_name}}
+      </button>
+      {% endfor %}
+     
+    </div>
+    
+  </div>
+
+
+
+
+{% endblock content %}
