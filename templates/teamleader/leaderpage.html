@@ -8,29 +8,48 @@
 {% block content %}
 
   {% csrf_token %}
-  <div class="container v-flex col-3 list-group">
+  <div class="container v-flex col-4 list-group">
+    <nav class=" bd-links">
+      <div class="bd-toc-item active " style="text-align:center ;">
+        <br>
+        <form method='post'>{% csrf_token %}
+          <label for="customerdata" style="margin-bottom:1% ;border: radius 30px;border:coral">الفرع</label>
+          <br>
+          <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
+            {% for i in bran %}
+            <option value="{{i.id}}" >{{i.id}}</option>
+            {% endfor %}
+          </select>
     
-    <form  method="post" >{% csrf_token %}
-    <label for="employee">اختر الموظف: </label>
-    <select  id="employee" name="employee">
-    {% for i in emp %}
+          <input type="submit" class="btn btn-primary " style="margin-right: 50%; margin-top: 5%;" value="عرض"> 
+        </form>
+      </div>
+    </nav>
+  </div>
+
+  <div class="border mt-5 mb-5" style="background-color: black;"></div>
+  <div class="container v-flex col-4 list-group">
+    
+    <form class style="justify-content: center; align-items: flex-start; display: flex; flex-direction: column; background-color: rgb(203, 249, 234);"  method="post" >{% csrf_token %}
+    <label for="employee">اختر محفظة المندوب </label>
+    <select class="select form-select" multiple="multiple" id="employee" name="employee">
+    {% for i in emp    %}
       <option value="{{i.officer_name2}}">{{i.officer_name2}}{{i.id}}</option>
     {% endfor %}
     </select>
     <br>
     <br>
-    <label for="officer">اختر الموظف: </label>
-    <select  id="officer" name="officer">
+    <label for="officer">اختر القائم بالأتصال </label>
+    <select class="form-select form-select-sm mb-2 mt-4"  id="officer" name="officer">
       {% for i in officers %}
         <option value="{{i.id}}">{{i.id}}</option>
       {% endfor %}
       </select>
       <br>
-    <input  type="submit" value="submit">
+    <input class="btn btn-success" style="margin-right: 40%;"  type="submit" value="Add Task">
   </form>
   </div>
-  <br>
-
+  <div class="border mt-5 mb-5" style="background-color: black;"></div>
   <div class="container v-flex col-3 list-group">
     <div class="list-group">
       {% for q in workplan %}

@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="login-parent">
+<div class="right-hero" style=" display:flex ; flex: 1; flex-direction: row; padding-right: 1%;">
+  <div class="texts">
+    <h1>أهلا بك في</h1>
+    <h1>نظام الأتصالات للمراجعة</h1>
+  </div>
+</div>
 <div class="container col-3 align-items-center">
     <form method="POST">
       {% csrf_token %}
@@ -15,5 +22,6 @@
        
         <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
       </form>
+</div>
 </div>
 {% endblock content %}

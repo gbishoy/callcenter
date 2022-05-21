@@ -9,8 +9,8 @@ from django.contrib import messages
 
 @login_required(login_url='loginpage')
 @allowed_users(['callers'])
+
 def get(request):
-    
     username = request.user.username
     dailytask = Cfmerchant.objects.raw("select distinct(national_id) as id ,client_name1 from public.cfmerchant inner join public.teamleader_choose on cfmerchant.officer_name2 = teamleader_choose.loanofficer_name and c_s = 'عميل' and teamleader_choose.employee = '{}' order by client_name1".format(username))
     if request.POST.get('customerdata'):
@@ -28,7 +28,7 @@ def get(request):
             commentt = {}
             username = request.user.username
             for key , value in request.POST.items():
-                if (key != 'mycheckbox' or key != 'csrfmiddlewaretoken') and value != '' :
+                if (key != 'mycheckbox' or key != 'csrfmiddlewaretoken') and key != '' :
                     if key == 'com1t':
                         ch = Comment(loan_code=request.POST['mycheckbox'],comhead=request.POST['com1'],desc=value,caller=username)
                         ch.save()
@@ -84,5 +84,4 @@ def get(request):
             return render(request,'callist/callist.html',{'customers':dailytask})
                     # ch = Comment(loan_code=request.POST['mycheckbox'][0],cus_code=request.POST['mycheckbox'][2],comhead=key,desc=value,caller=username,emp=request.POST['mycheckbox'][1])
                     # ch.save()
-
     return render(request,'callist/callist.html',{'customers':dailytask})
