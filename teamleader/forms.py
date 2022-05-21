@@ -6,6 +6,6 @@ from .models import choose ,Cfmerchant
 class chooseform(ModelForm):
     class Meta:
         model = choose
-        db_table = 'teamleader_choose'
+        db_table = 'choose'
         managed = True
         fields = ['loanofficer_name','employee']

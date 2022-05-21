@@ -12,16 +12,16 @@ from django.contrib import messages
 
 def get(request):
     username = request.user.username
-    dailytask = Cfmerchant.objects.raw("select distinct(national_id) as id ,client_name1 from public.cfmerchant inner join public.teamleader_choose on cfmerchant.officer_name2 = teamleader_choose.loanofficer_name and c_s = 'عميل' and teamleader_choose.employee = '{}' order by client_name1".format(username))
+    dailytask = Cfmerchant.objects.raw("select distinct(national_id) as id ,client_name from dbo.dis_in_client_damen_cf inner join [dbo].[teamleader_choose] on dis_in_client_damen_cf.officer_name = [teamleader_choose].[loanofficer_name] and c_s = 'عميل' and [teamleader_choose].[employee] = '{}' order by client_name".format(username))
     if request.POST.get('customerdata'):
         customercode = request.POST['customerdata']
-        customerloans = Cfmerchant.objects.raw("select loan_key1 as id from public.cfmerchant where national_id = '{}'".format(customercode))
+        customerloans = Cfmerchant.objects.raw("select loan_key as id from dbo.dis_in_client_damen_cf where national_id = '{}'".format(customercode))
         return render(request,'callist/callist.html',{'customers':dailytask,'customerloan':customerloans})
     elif request.POST.get('loan'): 
          loankey = request.POST['loan']
-         commentsty = Cfmerchant.objects.raw("select comment_text as id from commentsty")
-         customerdatas = Cfmerchant.objects.raw("select branch_code1 as id ,* from public.cfmerchant where c_s = 'عميل' and loan_key1 = '{}'".format(loankey))
-         damendatas = Cfmerchant.objects.raw("select branch_code1 as id, * from public.cfmerchant where c_s = 'ضامن' and loan_key1 = '{}'".format(loankey))
+         commentsty = Cfmerchant.objects.raw("select comment_text as id from comments where ComCate = 'cf'")
+         customerdatas = Cfmerchant.objects.raw("select branch_code as id ,* from dbo.dis_in_client_damen_cf where c_s = 'عميل' and loan_key = '{}'".format(loankey))
+         damendatas = Cfmerchant.objects.raw("select branch_code as id, * from dbo.dis_in_client_damen_cf where c_s = 'ضامن' and loan_key = '{}'".format(loankey))
          return render(request,'callist/loandetails.html',{'customerdata':customerdatas,'damendata':damendatas,'com':commentsty}) 
     else:
         if request.method == 'POST':

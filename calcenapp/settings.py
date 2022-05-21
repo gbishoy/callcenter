@@ -79,13 +79,14 @@ WSGI_APPLICATION = 'calcenapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST':'localhost',
-        'SCHEMA':'public',
-        'NAME': 'postgres',
-        'PORT':'5432',
-        'USER':'postgres',
-        'PASSWORD':'pop012',
+        'ENGINE': 'mssql',
+        'HOST':'10.9.254.11',
+        'SCHEMA':'dbo',
+        'NAME': 'AuditNetworkDB',
+        'PORT':'818',
+        'USER':'audit_user1',
+        'PASSWORD':'Audit@123456',
+        'OPTIONS':{"driver": "ODBC Driver 17 for SQL Server",},
 
     }
 }
