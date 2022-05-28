@@ -38,6 +38,7 @@ class Cfmerchant(models.Model):
 class choose (models.Model):
     loanofficer_name = models.CharField( max_length=50,blank=True, null=True)
     employee = models.TextField(blank=True, null=True)
+    customernumber = models.BigIntegerField(blank=True, null=True)
     timeadd = models.DateField(auto_now_add=True)
 
     class Meta:

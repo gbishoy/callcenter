@@ -30,6 +30,20 @@ class Cfmerchant(models.Model):
     merchant_name = models.TextField(blank=True, null=True)
     category_name = models.TextField(blank=True, null=True)
     sub_category_name = models.TextField(blank=True, null=True)
+    client_key = models.TextField(blank=True, null=True)
+    client_name = models.TextField(blank=True, null=True)
+    add4 = models.TextField(blank=True, null=True)
+    officer_name = models.TextField(blank=True, null=True)
+    tel4 = models.TextField(blank=True, null=True)
+    aprv_am = models.TextField(blank=True, null=True)
+    aprv_no = models.TextField(blank=True, null=True)
+    sub_category_name = models.TextField(blank=True, null=True)
+    category_name = models.TextField(blank=True, null=True)
+    client_name_m = models.TextField(blank=True, null=True)
+    inst = models.TextField(blank=True, null=True)
+    loan_am = models.TextField(blank=True, null=True)
+    loan_date = models.TextField(blank=True, null=True)
+    consumer_finance_initial_limit = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

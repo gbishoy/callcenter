@@ -1,6 +1,30 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 <main class="col-12 col-md-11 col-xl-10 py-md-3 pl-md-5 bd-content m-5 align-items-center" role="main">
-
+    <div class="col-12 col-md-3 col-xl-12">
+        <form class="bd-search d-flex align-items-center">        
+        </form>
+        <nav class=" bd-links">
+          <div class="bd-toc-item active">
+            <br>
+            <form id="choosecust" method='post'>{% csrf_token %}
+              <label for="customerdata"> العميل</label>
+              <br>
+          
+              <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
+                {% for i in ofloans %}
+                <option value="{{i.id}}" >{{i.client_name}}</option>
+                {% endfor %}
+              </select>
+        
+              <input id="get-cus-data" type="submit" class="btn btn-primary " style="margin-right: 15%; margin-top: 5%;" value="عرض"> 
+            </form>
+          </div>
+  
+        </nav>
+        
+      </div>
     <div class="d-flex flex-row text-break form-group col-md-4" style="width:100%;" >
         
         <div  class=" d-flex flex-row justify-content-start align-items-center text-nowrap" style="width:100%;"  >
@@ -10,7 +34,7 @@
                     بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p>
                 </span>
             <div style="border: solid; border-radius: 30px; border: 2px solid rgb(23, 5, 106); background-color: rgb(131, 159, 229); margin-right: 2%; ">
-                <input type="checkbox" id="rad1" name="fav_language" value="{{o.loan_key1}}">
+                <input type="checkbox" id="rad1" name="fav_language" value="{{o.loan_key}}">
                 <label for="rad1" class="checkbox-inline" >لم يتم التواصل </label><br>
             </div >
             <div id="rado" style="display:none; margin-right: 2%; " >
@@ -30,68 +54,28 @@
        
 
     </div>
-    <form method="post">{% csrf_token %} {% for o in customerdata %}
+    <form  method="post">{% csrf_token %}
         
         <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
-            <div style="padding: 20px; box-sizing: border-box;">
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+            <div id="showdata" style="padding: 20px; box-sizing: border-box;">
+                <div  class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
-                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name1}}</label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox1" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv1" style="display:none">
-                            <select class="form-select form-select-sm" name="com1" id="com1">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                                
-                            </select>
-                            <input type="text" class="form-control" name="com1t">
-                            
-                        </div>
+                        <label id="client_name" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name}}</label>
+
 
                     </div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
-                        <label class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox17" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv17" style="display:none">
-                            <select class="form-select form-select-sm" name="com2" id="com2">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com2t">
-                            
-                        </div>
+                        <label id="client_key" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
+
                     </div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name1}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox2" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv2" style="display:none">
-                            <select class="form-select form-select-sm" name="com3" id="com3">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com3t">
-                            
-                        </div>
+                        <label id="branch_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name}} </label>
+
                     </div>
 
                 </div>
@@ -100,60 +84,21 @@
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.national_id}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox3" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv3" style="display:none">
-                            <select class="form-select form-select-sm" name="com4" id="com4">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com4t">
-                            
-                        </div>
+                        <label id="id" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.id}} </label>
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">العمر</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.Textbox118}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox4" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv4" style="display:none">
-                            <select class="form-select form-select-sm" name="com5" id="com5">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com5t">
-                            
-                        </div>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">رقم الهاتف</label>
+                        <label id="tel4" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.tel4}} </label>
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am2}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox5" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv5" style="display:none">
-                            <select class="form-select form-select-sm" name="com6" id="com6">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com6t">
-                            
-                        </div>
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الموظف</label>
+                        <label id="officer_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.officer_name}} </label>
+ 
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
@@ -161,182 +106,64 @@
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الحد الأتماني الممنوح</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.consumer_finance_initial_limit}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox6" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv6" style="display:none">
-                            <select class="form-select form-select-sm" name="com7" id="com7">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com7t">
-                            
-                        </div>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                        <label id="consumer_finance_initial_limit" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.consumer_finance_initial_limit}} </label>
+                        <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
+                    </div>
+                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
+                        <label id="aprv_am" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am}} </label>
+                        <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                    </div>
+
+                </div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ القرض</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox7" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv7" style="display:none">
-                            <select class="form-select form-select-sm" name="com8" id="com8">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com8t">
-                            
-                        </div>
+                        <label id="loan_date" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">عدد الأقساط</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_no1}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox8" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv8" style="display:none">
-                            <select class="form-select form-select-sm" name="com9" id="com9">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com9t">
-                            
-                        </div>
+                        <label id="aprv_no" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_no}} </label>
+
+                    </div>
+                    <div class="d-flex flex-column text-break form-group col-md-4">
+                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">سعر المنتج</label>
+                        <label id="loan_am" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_am}} </label>
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
                 <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">رقم الهاتف</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.tel41}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox9" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv9" style="display:none">
-                            <select class="form-select form-select-sm" name="com10" id="com10">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com10t">
-                            
-                        </div>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ القرض</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox10" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv10" style="display:none">
-                            <select class="form-select form-select-sm" name="com11" id="com11">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com11t">
-                            
-                        </div>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">سعر المنتج</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_am1}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox11" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv11" style="display:none">
-                            <select class="form-select form-select-sm" name="com12" id="com12">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com12t">
-                            
-                        </div>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                </div>
                 <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">قيمة القسط</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.inst}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox12" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv12" style="display:none">
-                            <select class="form-select form-select-sm" name="com13" id="com13">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com13t">
-                            
-                        </div>
+                        <label id="inst" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.inst}} </label>
+
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">التاجر</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.client_name_m}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox13" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div >
-                        <div id="mycheckboxdiv13" style="display:none">
-                            <select class="form-select form-select-sm" name="com14" id="com14">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com14t">
-                            
-                        </div>
+                        <label id="client_name_m" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.client_name_m}} </label>
+
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                     <div class="d-flex flex-column text-break form-group col-md-4">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">فأة المنتج</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.category_name}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox14" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv14" style="display:none">
-                            <select class="form-select form-select-sm" name="com15" id="com15">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com15t">
-                            
-                        </div>
+                        <label id="category_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.category_name}} </label>
+
+
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
@@ -344,41 +171,7 @@
                 <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                     <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
                         <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">المنتج</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.sub_category_name}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox15" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv15" style="display:none">
-                            <select class="form-select form-select-sm" name="com16" id="com16">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com16t">
-                            
-                        </div>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الموظف</label>
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.officer_name2}} </label>
-                        <div style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">
-                            <label for="mycheckbox1" class="checkbox-inline" style="text-align: center; font-weight: bold;">غير مطايق</label>
-                            <input type="checkbox" name="mycheckbox" id="mycheckbox16" value="{{o.loan_key1}};{{o.officer_name2}};{{o.client_key}}" />
-                        </div>
-                        <div id="mycheckboxdiv16" style="display:none">
-                            <select class="form-select form-select-sm" name="com17" id="com17">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                {% for s in com %}
-                                <option value="{{s.id}}">{{s.id}}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" class="form-control" name="com17t">
-                            
-                        </div>
+                        <label id="sub_category_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.sub_category_name}} </label>
                     </div>
                     <div class="border mt-5 mb-5" style="background-color: black;"></div>
                 </div>
@@ -395,27 +188,33 @@
                             <th>الإسم</th>
                             <th>الرقم القومي</th>
                             <th>المنطقة</th>
-                            <th>عنوان المنزل</th>
                             <th>رقم التليفون</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for z in damendata %}
+  
                         <tr>
-                          <td>{{z.client_key1}}</td>
-                          <td>{{z.client_key}}</td>
-                          <td class="text-break" style="min-width: 150px;">{{z.client_name1}}</td>
-                          <td>{{z.national_id}}</td>
-                          <td style="color: black;">{{z.home_add_1_mem}}</td>
-                          <td class="text-break" style="min-width: 150px;">{{z.add41}}</td>
-                          <td>{{z.tel41}}</td>
+                          <td>ضامن</td>
+                          <td id="client_keyd">{{z.client_key}}</td>
+                          <td id="client_named" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
+                          <td id="ntid">{{z.id}}</td>
+                          <td id="add4d" style="color: black;">{{z.add4}}</td>
+                          <td id="tel4d">{{z.tel4}}</td>
                       </tr>
-                        {% endfor %}
+                      <tr>
+                        <td>ضامن</td>
+                        <td id="client_keydd">{{z.client_key}}</td>
+                        <td id="client_namedd" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
+                        <td id="ntidd">{{z.id}}</td>
+                        <td id="add4dd" style="color: black;">{{z.add4}}</td>
+                        <td id="tel4dd">{{z.tel4}}</td>
+                    </tr>
+      
                     </tbody>
                 </table>
             </div>
         </div>
-        <input id="submitting" type="submit" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 50%;width:10%;" value="حفظ"> {% endfor %}
+        <input id="submitting" type="button" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 50%;width:10%;" value="حفظ"> 
 
     </form>
     <br>
@@ -423,105 +222,7 @@
 
 </main>
 {% block scripts %}
-<script type="text/javascript">
-        $('#submitting').click(function() {
-        print()
-        
-        
-    });
-    $('#mycheckbox1').change(function() {
-        $('#mycheckboxdiv1').toggle();
-        
-        
-    });
-    $('#mycheckbox2').change(function() {
-        $('#mycheckboxdiv2').toggle();
-        
-        
-    });
-    $('#mycheckbox3').change(function() {
-        $('#mycheckboxdiv3').toggle();
-      
-        
-    });
-    $('#mycheckbox4').change(function() {
-        $('#mycheckboxdiv4').toggle();
-   
-        
-    });
-    $('#mycheckbox5').change(function() {
-        $('#mycheckboxdiv5').toggle();
-
-        
-    });
-    $('#mycheckbox6').change(function() {
-        $('#mycheckboxdiv6').toggle();
-
-        
-    });
-    $('#mycheckbox7').change(function() {
-        $('#mycheckboxdiv7').toggle();
-
-        
-    });
-    $('#mycheckbox8').change(function() {
-        $('#mycheckboxdiv8').toggle();
-
-        
-    });
-    $('#mycheckbox9').change(function() {
-        $('#mycheckboxdiv9').toggle();
-
-        
-    });
-    $('#mycheckbox10').change(function() {
-        $('#mycheckboxdiv10').toggle();
-
-        
-    });
-    $('#mycheckbox11').change(function() {
-        $('#mycheckboxdiv11').toggle();
-
-        
-    });
-    $('#mycheckbox12').change(function() {
-        $('#mycheckboxdiv12').toggle();
-
-        
-    });
-    $('#mycheckbox13').change(function() {
-        $('#mycheckboxdiv13').toggle();
-
-        
-    });
-    $('#mycheckbox14').change(function() {
-        $('#mycheckboxdiv14').toggle();
-
-        
-    });
-    $('#mycheckbox15').change(function() {
-        $('#mycheckboxdiv15').toggle();
-
-        
-    });
-    $('#mycheckbox16').change(function() {
-        $('#mycheckboxdiv16').toggle();
-
-        
-    });
-    $('#mycheckbox17').change(function() {
-        $('#mycheckboxdiv17').toggle();
-        
-        
-    });
-    $('#rad1').change(function() {
-
-        $('#rado').toggle();
-        
-        
-    });
-
-</script>
+<script type="text/javascript" src= "{% static 'js/customerdata.js' %}" ></script>
 {% endblock scripts %}
 
 

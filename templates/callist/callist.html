@@ -16,12 +16,12 @@
         <div class="bd-toc-item active">
           <br>
           <form method='post'>{% csrf_token %}
-            <label for="customerdata">قائمة العملاء</label>
+            <label for="branch"> الفرع</label>
             <br>
         
-            <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
-              {% for i in customers %}
-              <option value="{{i.id}}" >{{i.client_name1}}</option>
+            <select class="form-select form-select-sm" name="branch" id="branch" >
+              {% for i in branches %}
+              <option value="{{i.id}}" >{{i.branch_name}}</option>
               {% endfor %}
             </select>
       
@@ -40,9 +40,9 @@
         
         <div class="justify-content-center" style="background-color: rgb(237, 251, 254); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;"><div style="padding: 20px;"><div class="form-row">
           <div class="d-flex flex-column text-break form-group col-md-4 justify-content-center">
-            <label for="loan" style="color: rgb(110, 110, 110);">قروض العميل</label>
-            <select class="form-select form-select-sm mb-2 mt-4" style="margin-right: 15%;" name="loan" id="loan">
-              {% for o in customerloan %}
+            <label for="ofname" style="color: rgb(110, 110, 110);">الموظف</label>
+            <select class="form-select form-select-sm mb-2 mt-4" style="margin-right: 15%;" name="ofname" id="ofname">
+              {% for o in officername %}
               <option value="{{o.id}}">{{o.id}}</option>
               {% endfor %}
             </select>

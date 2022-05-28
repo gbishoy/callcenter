@@ -17,7 +17,7 @@
           <br>
           <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
             {% for i in bran %}
-            <option value="{{i.id}}" >{{i.id}}</option>
+            <option value="{{i.id}}" >{{i.id}}  {{i.cusnum}}</option>
             {% endfor %}
           </select>
     
@@ -34,7 +34,7 @@
     <label for="employee">اختر محفظة المندوب </label>
     <select class="select form-select" multiple="multiple" id="employee" name="employee">
     {% for i in emp    %}
-      <option value="{{i.officer_name2}}">{{i.officer_name2}}{{i.id}}</option>
+      <option value="{{i.officer_name}},{{i.id}}">{{i.officer_name}}{{i.id}}</option>
     {% endfor %}
     </select>
     <br>
@@ -54,14 +54,15 @@
     <div class="list-group">
       {% for q in workplan %}
       <button type="button" class="list-group-item list-group-item-action ">
-          اسم القائم بالأتصال : {{q.employee}}
+          اسم القائم بالأتصال : {{q.id}}
           <br>
-          اسم الأخصائي او المنسقة :  {{q.loanofficer_name}}
+            عدد الحالات  :  {{q.total}}
       </button>
       {% endfor %}
      
     </div>
-    
+    <br>
+    <br>
   </div>
 
 
