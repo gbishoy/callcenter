@@ -6,6 +6,7 @@ $("#get-cus-data").click(function(e){
         dataType:"json",
         type:"post",
         data:{
+            value:'1',
             nationalid : $nationalid,
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
         },
@@ -48,25 +49,17 @@ $("#get-cus-data").click(function(e){
                 $('#add4dd').html('--')
                 $('#tel4dd').html('--')
                 $('#ntidd').html('--') 
-            }
+            };
         },
         error:function(e){
             alert('There Is An Error')
         },
         complete:function(){}
     })
-})
+}); 
 
 
 
-
-
-$("#submitting").click(function(e) {
-    e.preventDefault();
-
-
-
-});
 $("#mycheckbox1").change(function() {
 $("#mycheckboxdiv1").toggle();
 
@@ -158,3 +151,7 @@ $("#rado").toggle();
 
 
 });
+
+$('#showaddcomment').click(function(){
+    $('#exampleModal').model('show');
+})

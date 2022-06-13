@@ -1,43 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block content %}
-<main class="col-12 col-md-11 col-xl-10 py-md-3 pl-md-5 bd-content m-5 align-items-center" role="main">
-    <div class="col-12 col-md-3 col-xl-12">
-        <form class="bd-search d-flex align-items-center">        
-        </form>
-        <nav class=" bd-links">
-          <div class="bd-toc-item active">
-            <br>
-            <form id="choosecust" method='post'>{% csrf_token %}
-              <label for="customerdata"> العميل</label>
-              <br>
-          
-              <select class="form-select form-select-sm" name="customerdata" id="customerdata" >
-                {% for i in ofloans %}
-                <option value="{{i.id}}" >{{i.client_name}}</option>
-                {% endfor %}
-              </select>
-        
-              <input id="get-cus-data" type="submit" class="btn btn-primary " style="margin-right: 15%; margin-top: 5%;" value="عرض"> 
-            </form>
-          </div>
-  
-        </nav>
-        
-      </div>
+<main  role="main">
     <div class="d-flex flex-row text-break form-group col-md-4" style="width:100%;" >
-        
         <div  class=" d-flex flex-row justify-content-start align-items-center text-nowrap" style="width:100%;"  >
             <h4 style="margin-left: 5px;"> اضافة التعليقات </h4>
             <span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(224, 80, 19);">
                 <p class="m-0" style="color: rgb(231, 135, 25); font-size: 0.9rem;"> 
                     بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p>
                 </span>
-            <div style="border: solid; border-radius: 30px; border: 2px solid rgb(23, 5, 106); background-color: rgb(131, 159, 229); margin-right: 2%; ">
-                <input type="checkbox" id="rad1" name="fav_language" value="{{o.loan_key}}">
-                <label for="rad1" class="checkbox-inline" >لم يتم التواصل </label><br>
-            </div >
-            <div id="rado" style="display:none; margin-right: 2%; " >
+                <div id="rates" style="margin-right: 20px;">
+                    <input type="radio" id="r1" name="rate" onclick="check(this.value)" value="1"> لم يتم التواصل
+                    <input type="radio" id="r2" name="rate" onclick="check(this.value)" value="2"> غير مطابق
+                    <input type="radio" id="r3" name="rate" onclick="check(this.value)" value="3"> مطابق 
+                  </div>
+            <!-- <div id="rado" style="display:none; margin-right: 2%; " >
             
                 <select class="form-select form-select-sm" name="rad11" id="rad11">
                     <option value="" selected disabled hidden>Choose here</option>
@@ -48,181 +26,589 @@
                 </select>
                 <input style="border:15%" type="text" class="form-control" name="rad12">
                 
+            </div> -->
+        </div>
+    </div>
+    <div class="container" style="
+    margin-right: 5%;
+    margin-left: 0px;
+    padding-right: 0px;
+    padding-left: 0px;">
+        <div class="row row-cols-6" style="margin-top: 5%; width: 100%;">
+            <div class="col-4"> 
+                <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(236, 242, 245); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+                    <nav class=" bd-links">
+                      <div class="bd-toc-item active">
+                          <h4>أختر العميل</h4>
+                        <form id="choosecust" method='post'>{% csrf_token %}
+                          <select class="form-select form-select-sm " style="background-color:rgb(230, 236, 240) ;" size="15" name="customerdata" id="customerdata" >
+                            {% for i in ofloans %}
+                            <option value="{{i.id}}" >{{i.client_name}}</option>
+                            {% endfor %}
+                          </select>
+                    
+                          <input id="get-cus-data" type="submit" class="btn btn-primary " style="margin-right: 5%; margin-top: 5%;" value="عرض"> 
+                        </form>
+                      </div>
+                    </nav>
+                </div>
+                <div class="container">
+                    <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(236, 242, 245); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+                        <h4 style="margin: 15px;">أضف التعليق</h4>
+                        <div class="container" style="margin: left 0px; padding: left 0px; flex: auto;">
+                            <form id="commentchoose" action="POST">
+                                <div class="label" style="background-color: rgb(247, 239, 239);">
+                                    <h6 style="margin:15%;">فأة التعليق</h6>
+                                </div>
+                                <select class="form-select form-select-sm" name="comcategory" id="comcategory">
+                                    <option class="selected" value="">أختر الفأة:</option>
+                                    <option class="selected" value="1">التاجر</option>
+                                    <option class="selected" value="2">العميل</option>
+                                    <option class="selected" value="3">الموظف</option>
+                                    <option class="selected" value="4">عدم</option>
+                                    <option class="selected" value="5">اخري</option>
+                                </select>
+                                <div class="label" style="background-color: rgb(247, 239, 239);">
+                                    <h6 style="margin:15%;">التعليق</h6>
+                                </div>
+                                <select class="form-select form-select-sm" name="getcom" id="getcom">
+
+                                </select>
+                                <div class="label" style="background-color: rgb(247, 239, 239);">
+                                    <h6 style="margin:15%;">وصف التعليق</h6>
+                                </div>
+                                <textarea rows="6" cols="50" dir="rtl" style="text-align: right; border:15%" type="text" class="form-control" id="commentdesc" name="rad12">
+                                </textarea>
+                                <input id="addcomment" type="submit" class="btn btn-success" value="أضف التعليق">    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <form  method="post">{% csrf_token %}
+                    <div class="border border-danger" style="text-align: center; margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(94, 190, 184); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+                        <h3>البيانات الأساسية</h3>
+                    </div>
+                    <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+                        <div id="showdata" style="padding: 20px; box-sizing: border-box;">
+                            <div  class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
+                                    <label id="client_name" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name}}</label>
+                                </div>
+                                <div class="d-flex flex-column text-break form-group col-md-4">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
+                                    <label id="client_key" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
+                                </div>
+                                <div class="d-flex flex-column text-break form-group col-md-4">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
+                                    <label id="branch_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name}} </label>
+                                </div>
+
+                            </div>
+                            
+                            <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                            <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
+                                    <label id="id" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.id}} </label>
+                                </div>
+                                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                                <div class="d-flex flex-column text-break form-group col-md-4">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">رقم الهاتف</label>
+                                    <label id="tel4" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.tel4}} </label>
+                                </div>
+                                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                                <div class="d-flex flex-column text-break form-group col-md-4">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الموظف</label>
+                                    <label id="officer_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.officer_name}} </label>
+                                </div>
+                                <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                            </div>
+                            <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                            <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الحد الأتماني الممنوح</label>
+                                    <label id="consumer_finance_initial_limit" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.consumer_finance_initial_limit}} </label>
+                                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                                </div>
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
+                                    <label id="aprv_am" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am}} </label>
+                                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                                </div>
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">العنوان</label>
+                                    <label id="add4" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.add4}} </label>
+                                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="border border-danger" style="text-align: center; margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(94, 190, 184); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
+                        <h3>تفاصيل الأقراض</h3>
+                    </div>  
+                    <div id="loans" >
+                    </div>
+                    </div>
+                </form>
             </div>
         </div>
-    
-       
+        <div class="row" style="margin-top: 1%; margin-bottom: 5%; width: 90%;">
+            <div class="col">
+                <div class=" w-100 mt-4 overflow-auto" style="padding-right:8% ; ">
+                    <div class="d-flex flex-column align-items-start justify-content-center">
+                        <table class="text-left table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>كود العميل</th>
+                                    <th>الإسم</th>
+                                    <th>الرقم القومي</th>
+                                    <th>المنطقة</th>
+                                    <th>رقم التليفون</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr>
+                                <td>ضامن</td>
+                                <td id="client_keyd">{{z.client_key}}</td>
+                                <td id="client_named" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
+                                <td id="ntid">{{z.id}}</td>
+                                <td id="add4d" style="color: black;">{{z.add4}}</td>
+                                <td id="tel4d">{{z.tel4}}</td>
+                            </tr>
+                            <tr>
+                                <td>ضامن</td>
+                                <td id="client_keydd">{{z.client_key}}</td>
+                                <td id="client_namedd" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
+                                <td id="ntidd">{{z.id}}</td>
+                                <td id="add4dd" style="color: black;">{{z.add4}}</td>
+                                <td id="tel4dd">{{z.tel4}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border mt-5 mb-5" style="background-color: black;"></div>
 
     </div>
-    <form  method="post">{% csrf_token %}
-        
-        <div class="border border-danger" style="margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
-            <div id="showdata" style="padding: 20px; box-sizing: border-box;">
-                <div  class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style=" box-sizing: border-box; color: rgb(0, 0, 0); text-align: center; font-weight: bold;">الإسم</label>
-                        <label id="client_name" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_name}}</label>
-
-
-                    </div>
-
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">كود العميل</label>
-                        <label id="client_key" class="form-label" style="text-align: center; font-weight: bold;">{{o.client_key}} </label>
-
-                    </div>
-
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
-                        <label id="branch_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name}} </label>
-
-                    </div>
-
-                </div>
-                
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الرقم القومي</label>
-                        <label id="id" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.id}} </label>
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">رقم الهاتف</label>
-                        <label id="tel4" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.tel4}} </label>
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الموظف</label>
-                        <label id="officer_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.officer_name}} </label>
- 
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                </div>
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الحد الأتماني الممنوح</label>
-                        <label id="consumer_finance_initial_limit" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.consumer_finance_initial_limit}} </label>
-                        <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                    </div>
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الدخل</label>
-                        <label id="aprv_am" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_am}} </label>
-                        <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                    </div>
-
-                </div>
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">تاريخ القرض</label>
-                        <label id="loan_date" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_date}} </label>
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">عدد الأقساط</label>
-                        <label id="aprv_no" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.aprv_no}} </label>
-
-                    </div>
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">سعر المنتج</label>
-                        <label id="loan_am" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.loan_am}} </label>
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                </div>
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">قيمة القسط</label>
-                        <label id="inst" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.inst}} </label>
-
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">التاجر</label>
-                        <label id="client_name_m" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.client_name_m}} </label>
-
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                    <div class="d-flex flex-column text-break form-group col-md-4">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">فأة المنتج</label>
-                        <label id="category_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.category_name}} </label>
-
-
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                </div>
-                <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
-                    <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
-                        <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">المنتج</label>
-                        <label id="sub_category_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.sub_category_name}} </label>
-                    </div>
-                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
-                </div>
-            </div>
-
-        </div>
-        <div class=" w-100 mt-4 overflow-auto" style="padding-right:8% ; ">
-            <div class="d-flex flex-column align-items-start justify-content-center">
-                <table class="text-left table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>كود العميل</th>
-                            <th>الإسم</th>
-                            <th>الرقم القومي</th>
-                            <th>المنطقة</th>
-                            <th>رقم التليفون</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-  
-                        <tr>
-                          <td>ضامن</td>
-                          <td id="client_keyd">{{z.client_key}}</td>
-                          <td id="client_named" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
-                          <td id="ntid">{{z.id}}</td>
-                          <td id="add4d" style="color: black;">{{z.add4}}</td>
-                          <td id="tel4d">{{z.tel4}}</td>
-                      </tr>
-                      <tr>
-                        <td>ضامن</td>
-                        <td id="client_keydd">{{z.client_key}}</td>
-                        <td id="client_namedd" class="text-break" style="min-width: 150px;">{{z.client_name}}</td>
-                        <td id="ntidd">{{z.id}}</td>
-                        <td id="add4dd" style="color: black;">{{z.add4}}</td>
-                        <td id="tel4dd">{{z.tel4}}</td>
-                    </tr>
-      
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <input id="submitting" type="button" class="btn border border-dark" style="background-color: darkseagreen;margin-right: 50%;width:10%;" value="حفظ"> 
-
-    </form>
-    <br>
-    <br>
-
 </main>
 {% block scripts %}
-<script type="text/javascript" src= "{% static 'js/customerdata.js' %}" ></script>
+<!-- <script type="text/javascript" src= "{% static 'js/customerdata.js' %}" ></script> -->
+<script>
+    function check(statevalue){
+        var nationalide = $('#id').html();
+        if(nationalide != null){
+            $.ajax({
+            url:"customerstate",
+            dataType:"json",
+            type:"post",
+            data:{
+                
+                status:statevalue,
+                nationalid:nationalide,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                alert(data['state']);
+            },
+            error:function(data){
+                alert(data['state']);
+            }
+
+            })
+        }
+
+    }
+    // if (document.getElementById('r1').checked) {
+    //     rate_value = document.getElementById('r1').value;
+    //     console.log(rate_value);
+    // } else if (document.getElementById('r2').checked){
+    //     rate_value = document.getElementById('r2').value;
+    //     console.log(rate_value);
+    // } else if (document.getElementById('r3').checked){
+    //     rate_value = document.getElementById('r3').value;
+    //     console.log(rate_value);
+    // }
+
+    $('#comcategory').change(function(){
+        console.log($(this).val());
+        if ($(this).val() === "1") {
+            console.log('1');
+            $.ajax({
+                url:"choosecomcat",
+            dataType:"json",
+            type:"post",
+            data:{
+                cmcat : $(this).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                // console.log(data['comcategory']);
+                const list = document.getElementById("getcom");
+                while (list.hasChildNodes()) {
+                    list.removeChild(list.firstChild);
+                }
+                for (var i in data['comcategory']){
+                    console.log(data['comcategory'][i]['fields']['comment']);
+                    var commdeta = document.createElement('option');
+                    commdeta.innerHTML = data['comcategory'][i]['fields']['comment'];
+                    commdeta.setAttribute('value',data['comcategory'][i]['fields']['comment']);
+                    document.getElementById('getcom').append(commdeta);
+                }
+            },
+            error:function(data){},
+                })
+        } else if ($(this).val() === "2") {
+            $.ajax({
+                url:"choosecomcat",
+            dataType:"json",
+            type:"post",
+            data:{
+                cmcat : $(this).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                const list = document.getElementById("getcom");
+                while (list.hasChildNodes()) {
+                    list.removeChild(list.firstChild);
+                }
+                for (var i in data['comcategory']){
+                    console.log(data['comcategory'][i]['fields']['comment']);
+                    var commdeta = document.createElement('option');
+                    commdeta.innerHTML = data['comcategory'][i]['fields']['comment'];
+                    commdeta.setAttribute('value',data['comcategory'][i]['fields']['comment']);
+                    document.getElementById('getcom').append(commdeta);
+                }
+            },
+            error:function(data){},
+                })
+            
+        } else if ($(this).val() === "3") {
+            $.ajax({
+                url:"choosecomcat",
+            dataType:"json",
+            type:"post",
+            data:{
+                cmcat : $(this).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                const list = document.getElementById("getcom");
+                while (list.hasChildNodes()) {
+                    list.removeChild(list.firstChild);
+                }
+                for (var i in data['comcategory']){
+                    console.log(data['comcategory'][i]['fields']['comment']);
+                    var commdeta = document.createElement('option');
+                    commdeta.innerHTML = data['comcategory'][i]['fields']['comment'];
+                    commdeta.setAttribute('value',data['comcategory'][i]['fields']['comment']);
+                    document.getElementById('getcom').append(commdeta);
+                }
+            },
+            error:function(data){},
+                })
+            
+        }else if ($(this).val() === "4") {
+            $.ajax({
+                url:"choosecomcat",
+            dataType:"json",
+            type:"post",
+            data:{
+                cmcat : $(this).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                const list = document.getElementById("getcom");
+                while (list.hasChildNodes()) {
+                    list.removeChild(list.firstChild);
+                }
+                for (var i in data['comcategory']){
+                    console.log(data['comcategory'][i]['fields']['comment']);
+                    var commdeta = document.createElement('option');
+                    commdeta.innerHTML = data['comcategory'][i]['fields']['comment'];
+                    commdeta.setAttribute('value',data['comcategory'][i]['fields']['comment']);
+                    document.getElementById('getcom').append(commdeta);
+                }
+            },
+            error:function(data){},
+                })
+            
+        }else if ($(this).val() === "5") {
+            $.ajax({
+                url:"choosecomcat",
+            dataType:"json",
+            type:"post",
+            data:{
+                cmcat : $(this).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                const list = document.getElementById("getcom");
+                while (list.hasChildNodes()) {
+                    list.removeChild(list.firstChild);
+                }
+                for (var i in data['comcategory']){
+                    console.log(data['comcategory'][i]['fields']['comment']);
+                    var commdeta = document.createElement('option');
+                    commdeta.innerHTML = data['comcategory'][i]['fields']['comment'];
+                    commdeta.setAttribute('value',data['comcategory'][i]['fields']['comment']);
+                    document.getElementById('getcom').append(commdeta);
+                }
+            },
+            error:function(data){
+                
+            },
+            
+                })
+            
+        }
+    })
+    $("#get-cus-data").click(function(e){
+    e.preventDefault();
+    $nationalid = $('#customerdata').val();
+    $.ajax({
+        url:"",
+        dataType:"json",
+        type:"post",
+        data:{
+            value:'1',
+            nationalid : $nationalid,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success:function(data){
+            const list = document.getElementById("loans");
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
+            }
+            
+            for (var i in data['details']){
+                
+                // main div
+                let maindev = document.createElement('div');
+
+                let secdiv1 = document.createElement("div");
+                let secdiv2 = document.createElement("div");
+                let secdiv3 = document.createElement("div");
+
+                let thidiv1 = document.createElement("div");
+                let thidiv2 = document.createElement("div");
+                let thidiv3 = document.createElement("div");
+                let thidiv4 = document.createElement("div");
+                let thidiv5 = document.createElement("div");
+                let thidiv6 = document.createElement("div");
+                let thidiv7 = document.createElement("div");
+
+                let loandate = document.createElement("label");
+                let insnumber = document.createElement("label");
+                let prodoeice = document.createElement("label");
+                let insamount = document.createElement("label");
+                let merch = document.createElement("label");
+                let procategory = document.createElement("label");
+                let subcategory = document.createElement("label");
+
+                let loandatef = document.createElement("label");
+                let insnumberf = document.createElement("label");
+                let prodoeicef = document.createElement("label");
+                let insamountf = document.createElement("label");
+                let merchf = document.createElement("label");
+                let procategoryf = document.createElement("label");
+                let subcategoryf = document.createElement("label");
+
+                thidiv1.appendChild(loandate);
+                thidiv1.appendChild(loandatef);
+                thidiv2.appendChild(insnumber);
+                thidiv2.appendChild(insnumberf);
+                thidiv3.appendChild(prodoeice);
+                thidiv3.appendChild(prodoeicef);
+                thidiv4.appendChild(merch);
+                thidiv4.appendChild(merchf);
+                thidiv5.appendChild(insamount);
+                thidiv5.appendChild(insamountf);
+                thidiv6.appendChild(procategory);
+                thidiv6.appendChild(procategoryf);
+                thidiv7.appendChild(subcategory);
+                thidiv7.appendChild(subcategoryf);
+
+                secdiv1.append(thidiv1);
+                secdiv1.append(thidiv2);
+                secdiv1.append(thidiv3);
+                secdiv2.append(thidiv4);
+                secdiv2.append(thidiv5);
+                secdiv2.append(thidiv6);
+                secdiv3.append(thidiv7);
+
+
+                let divider = document.createElement("div");
+
+                
+                
+                maindev.setAttribute("style","margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(194, 222, 240); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;");
+                maindev.setAttribute("class","border border-danger");
+                maindev.setAttribute("id","maindiv")
+                // second div
+                secdiv1.setAttribute("style"," width: 100%;");
+                secdiv1.setAttribute("class","form-colum d-flex text-break form-group col-md-4 ");
+                secdiv2.setAttribute("style"," width: 100%;");
+                secdiv2.setAttribute("class","form-colum d-flex text-break form-group col-md-4 ");
+                secdiv3.setAttribute("style"," width: 100%;");
+                secdiv3.setAttribute("class","form-colum d-flex text-break form-group col-md-4 ");
+                // third div
+                thidiv1.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv2.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv3.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv4.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv5.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv6.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                thidiv7.setAttribute("class","d-flex flex-column text-break form-group col-md-4");
+                // divider
+                divider.setAttribute("style","background-color: black;");
+                divider.setAttribute("class","border mt-5 mb-5");
+                // lablemain
+                loandate.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                loandate.setAttribute("class","form-label");
+                insnumber.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                insnumber.setAttribute("class","form-label");
+                prodoeice.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                prodoeice.setAttribute("class","form-label");
+                insamount.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                insamount.setAttribute("class","form-label");
+                merch.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                merch.setAttribute("class","form-label");
+                procategory.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                procategory.setAttribute("class","form-label");
+                subcategory.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                subcategory.setAttribute("class","form-label"); 
+                // lableinfo
+                loandatef.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                loandatef.setAttribute("class","form-label");
+                insnumberf.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                insnumberf.setAttribute("class","form-label");
+                prodoeicef.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                prodoeicef.setAttribute("class","form-label");
+                insamountf.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                insamountf.setAttribute("class","form-label");
+                merchf.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                merchf.setAttribute("class","form-label");
+                procategoryf.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                procategoryf.setAttribute("class","form-label");
+                subcategoryf.setAttribute("style","color:rgb(0, 0, 0); text-align: center; font-weight: bold ;");
+                subcategoryf.setAttribute("class","form-label");
+                //
+                loandate.innerHTML = 'تاريخ القرض';
+                insnumber.innerHTML = 'عدد الأقساط';
+                prodoeice.innerHTML ='سعر المنتج';
+                insamount.innerHTML ='قيمة القسط';
+                merch.innerHTML = 'التاجر';
+                procategory.innerHTML ='فأة المنتج';
+                subcategory.innerHTML = 'المنتج';
+                // const element = document.getElementById("loans");
+                // element.removeChild(element.childNodes[0]);
+            
+
+            
+                
+                loandatef.innerHTML = data['details'][i]['fields'].loan_date;
+                insnumberf.innerHTML = data['details'][i]['fields'].aprv_no;
+                prodoeicef.innerHTML =data['details'][i]['fields'].loan_am;
+                insamountf.innerHTML =data['details'][i]['fields'].inst;
+                merchf.innerHTML = data['details'][i]['fields'].client_name_m;
+                procategoryf.innerHTML =data['details'][i]['fields'].category_name;
+                subcategoryf.innerHTML = data['details'][i]['fields'].sub_category_name;
+
+                maindev.setAttribute("id",i);
+
+
+                maindev.appendChild(secdiv1);
+                maindev.appendChild(secdiv2);
+                maindev.appendChild(secdiv3);
+
+                document.getElementById("loans").appendChild(maindev);
+            }
+            $('#add4').html(data['customer'][0]['fields'].add4)
+            $('#aprv_am').html(data['customer'][0]['fields'].aprv_am)
+            $('#officer_name').html(data['customer'][0]['fields'].officer_name) 
+            $('#tel4').html(data['customer'][0]['fields'].tel4)
+            $('#id').html(data['customer'][0].pk)
+            $('#consumer_finance_initial_limit').html(data['customer'][0]['fields'].consumer_finance_initial_limit)
+            $('#branch_name').html(data['customer'][0]['fields'].branch_name)
+            $('#client_key').html(data['customer'][0]['fields'].client_key)
+            $('#client_name').html(data['customer'][0]['fields'].client_name)
+            $('#client_keyd').html(data['damen'][0]['fields'].client_key)
+            $('#client_named').html(data['damen'][0]['fields'].client_name)
+            $('#add4d').html(data['damen'][0]['fields'].add4)
+            $('#tel4d').html(data['damen'][0]['fields'].tel4)
+            $('#ntid').html(data['damen'][0].pk)
+            $('#client_keydd').html(data['damen'][1]['fields'].client_key)
+            $('#client_namedd').html(data['damen'][1]['fields'].client_name)
+            $('#add4dd').html(data['damen'][1]['fields'].add4)
+            $('#tel4dd').html(data['damen'][1]['fields'].tel4)
+            $('#ntidd').html(data['damen'][1].pk)
+            if(data['damen'][1]['fields'].client_key != null){
+                $('#client_keydd').html(data['damen'][1]['fields'].client_key)
+                $('#client_namedd').html(data['damen'][1]['fields'].client_name)
+                $('#add4dd').html(data['damen'][1]['fields'].add4)
+                $('#tel4dd').html(data['damen'][1]['fields'].tel4)
+                $('#ntidd').html(data['damen'][1].pk)
+            }else{
+                $('#client_keydd').html('--')
+                $('#client_namedd').html('--')
+                $('#add4dd').html('--')
+                $('#tel4dd').html('--')
+                $('#ntidd').html('--') 
+            };
+        },
+        error:function(e){
+            alert('There Is An Error')
+        },
+        complete:function(){}
+    })
+}); 
+
+
+
+$('#showaddcomment').click(function(){
+    $('#exampleModal').model('show');
+})
+    $('#addcomment').click(function(e){
+        e.preventDefault();
+        var nationalid = $('#id').html();
+        var getcom = $('#getcom').val();
+        var customercode = $('#client_key').html();
+        var description = $('#commentdesc').val();
+        var employee = $('#officer_name').html();
+        $.ajax({
+            url:'add_comment',
+            dataType:"json",
+            type:"post",
+            data:{
+                value:'0',
+                nationalid:nationalid,
+                customerco:customercode,
+                head:getcom,
+                des:description,
+                emp:employee,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+
+            },
+            success:function(data){
+                alert(data['state']);
+            },
+            error:function(data){
+                alert(data['state']);
+            },
+        })       
+
+    })
+</script>
 {% endblock scripts %}
 
 

@@ -44,6 +44,15 @@ class Cfmerchant(models.Model):
     loan_am = models.TextField(blank=True, null=True)
     loan_date = models.TextField(blank=True, null=True)
     consumer_finance_initial_limit = models.TextField(blank=True, null=True)
+    weight = models.TextField(blank=True, null=True)
+    commentCategory = models.TextField(blank=True, null=True)
+    violationKind = models.TextField(blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    indvORgroop = models.TextField(blank=True, null=True)
+    oneONgroop = models.TextField(blank=True, null=True)
+    kind = models.TextField(blank=True, null=True)
+    type = models.TextField(blank=True, null=True)
+    f0 = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
