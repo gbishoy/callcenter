@@ -53,6 +53,9 @@ class Cfmerchant(models.Model):
     kind = models.TextField(blank=True, null=True)
     type = models.TextField(blank=True, null=True)
     f0 = models.TextField(blank=True, null=True)
+    comhead = models.TextField(blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)
+    home_add_1_mem = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+
+
 {% block content %}
 <main  role="main">
     <div class="d-flex flex-row text-break form-group col-md-4" style="width:100%;" >
@@ -8,7 +10,7 @@
             <h4 style="margin-left: 5px;"> اضافة التعليقات </h4>
             <span class="d-flex p-2 ml-2 mb-2" style="border-radius: 30px; border: 1px solid rgb(224, 80, 19);">
                 <p class="m-0" style="color: rgb(231, 135, 25); font-size: 0.9rem;"> 
-                    بعد انهاء جميع بيانات النموزج يتم الضغط علي حفظ </p>
+                    بعد انهاء جميع بيانات النموزج يتم اختيار الحالة </p>
                 </span>
                 <div id="rates" style="margin-right: 20px;">
                     <input type="radio" id="r1" name="rate" onclick="check(this.value)" value="1"> لم يتم التواصل
@@ -105,9 +107,7 @@
                                     <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">الفرع</label>
                                     <label id="branch_name" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.branch_name}} </label>
                                 </div>
-
                             </div>
-                            
                             <div class="border mt-5 mb-5" style="background-color: black;"></div>
                             <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
                                 <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
@@ -147,6 +147,13 @@
 
                                 </div>
                             </div> 
+                            <div class="form-colum d-flex text-break form-group col-md-4 " style="width: 100%;">
+                                <div class="d-flex flex-column text-break form-group col-md-4 align-items-start">
+                                    <label class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;"> 2 العنوان</label>
+                                    <label id="home_add_1_mem" class="form-label" style="color:rgb(0, 0, 0); text-align: center; font-weight: bold ;">{{o.home_add_1_mem}} </label>
+                                    <div class="border mt-5 mb-5" style="background-color: black;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div> 
                     <div class="border border-danger" style="text-align: center; margin-top:10px;border: 5px;border-radius:15px;margin-right:5%;background-color: rgb(94, 190, 184); padding: 15px; border: 1px solid rgb(229, 229, 229); width: 100%;">
@@ -206,7 +213,7 @@
 <script>
     function check(statevalue){
         var nationalide = $('#id').html();
-        if(nationalide != null){
+        if($('#id').html() != ''){
             $.ajax({
             url:"customerstate",
             dataType:"json",
@@ -221,23 +228,15 @@
                 alert(data['state']);
             },
             error:function(data){
-                alert(data['state']);
+                alert("Please Select Customer At Firest !");
             }
 
             })
+            window.location.reload();
         }
 
     }
-    // if (document.getElementById('r1').checked) {
-    //     rate_value = document.getElementById('r1').value;
-    //     console.log(rate_value);
-    // } else if (document.getElementById('r2').checked){
-    //     rate_value = document.getElementById('r2').value;
-    //     console.log(rate_value);
-    // } else if (document.getElementById('r3').checked){
-    //     rate_value = document.getElementById('r3').value;
-    //     console.log(rate_value);
-    // }
+
 
     $('#comcategory').change(function(){
         console.log($(this).val());
@@ -533,12 +532,24 @@
 
                 document.getElementById("loans").appendChild(maindev);
             }
+            $('#client_keyd').html('')
+            $('#client_named').html('')
+            $('#add4d').html('')
+            $('#tel4d').html('')
+            $('#ntid').html('')
+            $('#client_keydd').html('')
+            $('#client_namedd').html('')
+            $('#add4dd').html('')
+            $('#tel4dd').html('')
+            $('#ntidd').html('')
+
+            $('#home_add_1_mem').html(data['customer'][0]['fields'].home_add_1_mem)
             $('#add4').html(data['customer'][0]['fields'].add4)
             $('#aprv_am').html(data['customer'][0]['fields'].aprv_am)
             $('#officer_name').html(data['customer'][0]['fields'].officer_name) 
             $('#tel4').html(data['customer'][0]['fields'].tel4)
             $('#id').html(data['customer'][0].pk)
-            $('#consumer_finance_initial_limit').html(data['customer'][0]['fields'].consumer_finance_initial_limit)
+            $('#consumer_finance_initial_limit').html(parseInt(data['customer'][0]['fields'].consumer_finance_initial_limit))
             $('#branch_name').html(data['customer'][0]['fields'].branch_name)
             $('#client_key').html(data['customer'][0]['fields'].client_key)
             $('#client_name').html(data['customer'][0]['fields'].client_name)
@@ -578,6 +589,8 @@
 $('#showaddcomment').click(function(){
     $('#exampleModal').model('show');
 })
+
+// add comment js fun
     $('#addcomment').click(function(e){
         e.preventDefault();
         var nationalid = $('#id').html();
@@ -585,27 +598,40 @@ $('#showaddcomment').click(function(){
         var customercode = $('#client_key').html();
         var description = $('#commentdesc').val();
         var employee = $('#officer_name').html();
-        $.ajax({
-            url:'add_comment',
-            dataType:"json",
-            type:"post",
-            data:{
-                value:'0',
-                nationalid:nationalid,
-                customerco:customercode,
-                head:getcom,
-                des:description,
-                emp:employee,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        if($('#id').html() != '' ){
+            if($('#commentdesc').val().trim().length > 1){
+                $.ajax({
+                url:'add_comment',
+                dataType:"json",
+                type:"post",
+                data:{
+                    value:'0',
+                    nationalid:nationalid,
+                    customerco:customercode,
+                    head:getcom,
+                    des:description,
+                    emp:employee,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
 
-            },
-            success:function(data){
-                alert(data['state']);
-            },
-            error:function(data){
-                alert(data['state']);
-            },
-        })       
+                },
+                success:function(data){
+                    alert(data['state']);
+                    $('#commentdesc').val('');
+                },
+                error:function(data){
+                    alert(data['state']);
+                },
+                })
+            }else{
+                alert('Please Add Description To Your Comment !');
+            }
+
+        }else{
+            alert('Please Choose Customer At Firest !');
+        }
+        
+        
+
 
     })
 </script>

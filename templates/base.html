@@ -17,10 +17,40 @@
     
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid" style="background-color: rgb(42, 51, 144); height: 75px; margin-bottom: 20px;">
-          <a class="navbar-brand " style="color: aliceblue;" href="#">مركذ الأتصالات</a>
+          <a class="navbar-brand " style="color: aliceblue;" href="#">مركز الأتصالات</a>
            
           {% block navbar %}
-        {% endblock navbar %}  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if "teamleader" in user.groups.all.0.name %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" style="color: rgb(228, 171, 247);" href="{% url 'workflow' %}">متابعة المهام</a>
+                </li>
+                {% endif %}
+                {% if "teamleader" in user.groups.all.0.name %}
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" style="color: rgb(228, 171, 247);" href="{% url 'teamleader' %}">توزيع المهام</a>
+                </li>
+                {% endif %}
+                {% if "callers" in user.groups.all.0.name %}
+                <li class="nav-item">
+                  <a class="nav-link" style="color: rgb(166, 11, 217);" href="{% url 'callist' %}">المهام اليومية</a>
+                </li>  
+                {% endif %}
+                {% if "callers" in user.groups.all.0.name %}
+                <li class="nav-item">
+                  <a class="nav-link" style="color: rgb(166, 11, 217);" href="{% url 'edit_comments' %}">تعديل التعليقات</a>
+                </li>  
+                {% endif %}
+                
+                
+                
+              </ul>
+          
+              <button id="logoutbutton" class="btn btn-danger" >LogOut</button> 
+             
+              
+          {% endblock navbar %} 
              
           </div>
           
@@ -36,9 +66,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       $("#logoutbutton").click(function(e){
-        location.reload();
         $.ajax({
-          url:'logout'
+          url:'logout',
+          success:function(data){
+            window.location.reload();
+          }
         });
         
       })
