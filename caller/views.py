@@ -1,4 +1,3 @@
-from attr import fields
 from django.shortcuts import redirect, render
 from django.views.generic import View
 from django.contrib.auth.decorators import *
@@ -39,10 +38,10 @@ def get(request):
         elif request.POST['nationalid'] != null:
             cusnationalid = request.POST['nationalid']
             # commentsty = Cfmerchant.objects.raw("select comment_text as id from comments where ComCate = 'cf'")
-            customerdatasmain = Cfmerchant.objects.raw("select national_id as id,client_key,client_name,add4,officer_name,tel4,branch_name ,aprv_am,consumer_finance_initial_limit,home_add_1_mem from dbo.dis_in_client_damen_cf where national_id = '{}' and MONTH([loan_date])=MONTH(GETDATE())-1 group by national_id,client_key,client_name,add4,officer_name,tel4,branch_name,aprv_am,consumer_finance_initial_limit,home_add_1_mem".format(cusnationalid))
-            customerdatas = Cfmerchant.objects.raw("select national_id as id ,* from dbo.dis_in_client_damen_cf where national_id = '{}'".format(cusnationalid))
+            customerdatasmain = Cfmerchant.objects.raw("select national_id as id,client_key,client_name,add4,officer_name,tel4,branch_name ,aprv_am,consumer_finance_initial_limit,home_add_1_mem,consumer_finance_credit_left_to_use from dbo.dis_in_client_damen_cf where national_id = '{}' and MONTH([loan_date])=MONTH(GETDATE())-1 group by national_id,client_key,client_name,add4,officer_name,tel4,branch_name,aprv_am,consumer_finance_initial_limit,home_add_1_mem,consumer_finance_credit_left_to_use".format(cusnationalid))
+            customerdatas = Cfmerchant.objects.raw("select national_id as id ,* from dbo.dis_in_client_damen_cf where national_id = '{}' and c_s = 'عميل'".format(cusnationalid))
             damendatas = Cfmerchant.objects.raw("select national_id as id,tel4,client_name,add4,client_key from dbo.dis_in_client_damen_cf where c_s = 'ضامن' and loan_key in (select distinct(loan_key) from dbo.dis_in_client_damen_cf where  national_id = '{}') and MONTH([loan_date])=MONTH(GETDATE())-1 GROUP BY national_id ,client_name,tel4,add4,client_key".format(cusnationalid))
-            datamain = serializers.serialize('json', customerdatasmain, fields=('id','client_key','client_name','add4','officer_name','tel4','branch_name','aprv_am','consumer_finance_initial_limit','home_add_1_mem'))
+            datamain = serializers.serialize('json', customerdatasmain, fields=('id','client_key','client_name','add4','officer_name','tel4','branch_name','aprv_am','consumer_finance_initial_limit','home_add_1_mem','consumer_finance_credit_left_to_use'))
             datadetails = serializers.serialize('json', customerdatas, fields=('id','sub_category_name','category_name','client_name_m','inst','loan_am','aprv_no','loan_date'))
             damen = serializers.serialize('json', damendatas, fields=('id','client_key','client_name','add4','tel4'))
             return JsonResponse({"customer":json.loads(datamain),"details":json.loads(datadetails),"damen":json.loads(damen)})
